@@ -4424,7 +4424,9 @@
   .navbar-toggler:hover, .navbar-toggler:focus {
     text-decoration: none;
   }
-  
+  .selected{
+    font-weight: bold;
+  }
   .navbar-toggler-icon {
     display: inline-block;
     width: 1.5em;
@@ -5040,6 +5042,14 @@
   
   .breadcrumb-item.active {
     color: #6c757d;
+  }
+
+  .pageHeader{
+    position: absolute;
+  }
+
+  .pageBody{
+    position: relative;
   }
   
   .pagination {

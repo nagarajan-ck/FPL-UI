@@ -1,11 +1,11 @@
 <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">liga líder después del cierre</a>
   <a class="navbar-brand" href="#">segundo liga tras el cierre</a> -->
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">FPL</a>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top pageHeader">
+    <!-- <a class="navbar-brand" href="#">FPL</a> -->
     
   
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <span class=" navbar-collapse" id="navbarsExampleDefault" >
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" [ngClass]="{'active': division === '1'}">
           <a class="nav-link" (click)=callFPLService(mainLeagueID)>liga líder después del cierre</a>
@@ -16,18 +16,18 @@
        
       </ul>
       
-    </div>
+    </span>
   </nav>
   
 <!-- </nav> -->
-
-<main role="main" class="container">
+<br>
+<main role="main" class="container pageBody" >
 
   <div class="starter-template">
     
     
 
-    <table class="table  table-dark">
+    <table class="table  table-dark" style="width: fit-content;">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -43,7 +43,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let player of playerData" [ngClass]="{'relegation':(player.rank>playerData.length-3), 'relegated': player.rank=='R', 'promotion':(player.rank<4) && player.division=='184','champion': player.rank=='C'|| player.rank=='P'}">
+        <tr *ngFor="let player of playerData" [ngClass]="{'relegation':(player.rank>playerData.length-3), 'relegated': player.rank=='R', 'promotion':(player.rank<4) && player.division=='276380','champion': player.rank=='C'|| player.rank=='P'}">
           <th scope="row">{{player.rank}}</th>
           <td><b>{{player.entry_name}}</b><br>{{player.player_name}}</td>
           <!-- <td></td> -->
@@ -59,4 +59,37 @@
     </table>
   </div>
 
-</main><!-- /.container -->
+</main>
+
+
+<div class="container">
+  <ul class="nav nav-tabs">
+
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{'selected': result}" (click)="getResults()">Results</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{'selected': !result}" (click)="getFixtures()">Fixtures</a>
+    </li>
+    
+    
+  </ul>
+  <br>
+
+  <table class="table  table-dark" style="width: 50%;">
+    <tbody>
+
+      <tr *ngFor="let fixture of fixtures">
+
+        <td style="width: 40%;"><b>{{fixture.entry_1_name}}</b> <br> {{fixture.entry_1_player_name}}</td>
+        
+        <td style="width: 20%;"> {{fixture.entry_1_points}} : {{fixture.entry_2_points}} </td>
+        
+        <td style="width: 40%;"><span style="text-align: end;"><b>{{fixture.entry_2_name}}</b> <br> {{fixture.entry_2_player_name}}</span></td>
+
+
+
+      </tr>
+    </tbody>
+</table>
+</div>
