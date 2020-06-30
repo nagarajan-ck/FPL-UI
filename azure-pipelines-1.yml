@@ -23,6 +23,7 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: '6dccb086-3bba-4ad1-9a9a-2691bd1bcf47'
+    azureSubscription: 'Free Trial(6dccb086-3bba-4ad1-9a9a-2691bd1bcf47)'
+    appType: 'webAppLinux'
     appName: 'fpl90mm'
-    package: $(System.DefaultWorkingDirectory)/**/*.zip
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
