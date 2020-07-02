@@ -9,8 +9,8 @@ import {environment} from '../environments/environment'
 export class AppComponent {
   
   title = 'fplApp';
-  fplURL_table = 'http://20.39.161.190/fpl/table?leagueID=';
-  fplURL_fixtures = 'http://20.39.161.190/fpl/fixtures?gameweek={gameweek}&leagueID=';
+  fplURL_table = 'https://fantasy.premierleague.com/api/leagues-h2h/{leagueID}/standings/';
+  fplURL_fixtures = 'https://fantasy.premierleague.com/api/leagues-h2h-matches/league/{leagueID}/?event=';
   fpl_fixtures: any;
   playerData: any[];
   mainLeagueID = "1768028";
@@ -32,7 +32,7 @@ export class AppComponent {
     this.result = true
 
 
-    this.http.get(this.fplURL_table + leagueID).subscribe(
+    this.http.get(this.fplURL_table.replace('{leagueID}', leagueID)).subscribe(
       response => {
         this.playerData = response["standings"]["results"]
         this.confirmStatus();
@@ -50,7 +50,7 @@ console.log(this.playerData);
     let leagueID: string = this.division=="1"? this.mainLeagueID: this.secondDivisionID;
     this.result=false
 
-    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek+39).toString()) + leagueID);
+    this.getGames(this.fplURL_fixtures.replace("{leagueID}", leagueID) + (this.completed_gameweek+39).toString());
 
     
     // this.http.get(this.fplURL_fixtures).subscribe(
@@ -67,7 +67,7 @@ console.log(this.playerData);
   getResults(){
     this.result = true
     let leagueID: string = this.division=="1"? this.mainLeagueID: this.secondDivisionID;
-    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek+38).toString()) + leagueID);
+    this.getGames(this.fplURL_fixtures.replace("{leagueID}", leagueID) + (this.completed_gameweek+38).toString());
     
   }
 
