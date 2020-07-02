@@ -9,8 +9,8 @@ import {environment} from '../environments/environment'
 export class AppComponent {
   
   title = 'fplApp';
-  fplURL_table = 'http://20.39.161.190/fpl/table?leagueID=';
-  fplURL_fixtures = 'http://20.39.161.190/fpl/fixtures?gameweek={gameweek}&leagueID=';
+  fplURL_table = 'https://90mmfpl.azurewebsites.net/fpl/table?leagueID=';
+  fplURL_fixtures = 'https://90mmfpl.azurewebsites.net/fpl/fixtures?gameweek={gameweek}&leagueID=';
   fpl_fixtures: any;
   playerData: any[];
   mainLeagueID = "1768028";
