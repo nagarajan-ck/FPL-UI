@@ -8,7 +8,7 @@ import {environment} from '../environments/environment'
 })
 export class AppComponent {
   
-  title = 'Naga's FPL';
+  title = "Naga's FPL";
   fplURL_table = 'https://90mmfpl.azurewebsites.net/fpl/table?leagueID=';
   fplURL_fixtures = 'https://90mmfpl.azurewebsites.net/fpl/fixtures?gameweek={gameweek}&leagueID=';
   fpl_fixtures: any;
