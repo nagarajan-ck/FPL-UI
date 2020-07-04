@@ -8,9 +8,9 @@ import {environment} from '../environments/environment'
 })
 export class AppComponent {
   
-  title = 'fplApp';
-  fplURL_table = 'http://20.39.161.190/fpl/table?leagueID=';
-  fplURL_fixtures = 'http://20.39.161.190/fpl/fixtures?gameweek={gameweek}&leagueID=';
+  title = "Naga's FPL";
+  fplURL_table = 'https://90mmfpl.azurewebsites.net/fpl/table?leagueID=';
+  fplURL_fixtures = 'https://90mmfpl.azurewebsites.net/fpl/fixtures?gameweek={gameweek}&leagueID=';
   fpl_fixtures: any;
   playerData: any[];
   mainLeagueID = "1768028";
@@ -38,7 +38,7 @@ export class AppComponent {
         this.confirmStatus();
         this.completed_gameweek = this.playerData.length == 0 ? 0 : this.playerData[0]["matches_played"];
         this.getResults();
-console.log(this.playerData);
+
 
       },
       err => { console.log(err); }
@@ -50,18 +50,7 @@ console.log(this.playerData);
     let leagueID: string = this.division=="1"? this.mainLeagueID: this.secondDivisionID;
     this.result=false
 
-    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek+39).toString()) + leagueID);
-
-    
-    // this.http.get(this.fplURL_fixtures).subscribe(
-    //   response => {
-    //     this.fixtures = response["results"]
-    //     console.log(this.fixtures);
-
-
-    //   },
-    //   err => { console.log(err); }
-    // );
+    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek+39).toString()) + leagueID);  
   }
 
   getResults(){
@@ -72,13 +61,13 @@ console.log(this.playerData);
   }
 
   getGames(fplUrl: string){
-    console.log(fplUrl);
+    
     
     // this.fplURL_fixtures = this.fplURL_fixtures.replace("{gameweek}", this.completed_gameweek.toString()) + leagueID;
     this.http.get(fplUrl).subscribe(
       response => {
         this.fixtures = response["results"]
-        console.log(this.fixtures);
+        
 
 
       },
@@ -96,9 +85,7 @@ console.log(this.playerData);
     let relegation_cuttoff = this.playerData[leagueSize - 4]["total"];
 
     let matches_remaining = ((leagueSize * 2) - 2) - this.playerData[0]["matches_played"];
-    for (let i = 0, j = leagueSize - 3; i < 3 && j < leagueSize; ++i, j++) {
-      // console.log(matches_remaining);
-      // console.log(promotion_cuttoff); console.log(relegation_cuttoff);
+    for (let i = 0, j = leagueSize - 3; i < 3 && j < leagueSize; ++i, j++) {      
       if (this.division == '2') {
         if (promotion_cuttoff + (3 * matches_remaining) < this.playerData[i]["total"]) {
           this.playerData[i]["rank"] = "P"
