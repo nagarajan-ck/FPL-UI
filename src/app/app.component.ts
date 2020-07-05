@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {environment} from '../environments/environment'
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
   title = "Naga's FPL";
   fplURL_table = 'https://90mmfpl.azurewebsites.net/fpl/table?leagueID=';
   fplURL_fixtures = 'https://90mmfpl.azurewebsites.net/fpl/fixtures?gameweek={gameweek}&leagueID=';
@@ -17,8 +16,9 @@ export class AppComponent {
   secondDivisionID = "1768026"
   division = "1"
   fixtures: any[]
-  result : boolean= true
+  result: boolean = true
   completed_gameweek: number;
+  cupFlag: boolean = false
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -27,7 +27,8 @@ export class AppComponent {
 
 
   callFPLService(leagueID: string) {
-    document.documentElement.scrollTop=0;
+    this.cupFlag = false;
+    document.documentElement.scrollTop = 0;
     this.division = leagueID == this.mainLeagueID ? "1" : "2";
     this.result = true
 
@@ -47,27 +48,27 @@ export class AppComponent {
   }
 
   getFixtures() {
-    let leagueID: string = this.division=="1"? this.mainLeagueID: this.secondDivisionID;
-    this.result=false
+    let leagueID: string = this.division == "1" ? this.mainLeagueID : this.secondDivisionID;
+    this.result = false
 
-    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek+39).toString()) + leagueID);  
+    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek + 39).toString()) + leagueID);
   }
 
-  getResults(){
+  getResults() {
     this.result = true
-    let leagueID: string = this.division=="1"? this.mainLeagueID: this.secondDivisionID;
-    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek+38).toString()) + leagueID);
-    
+    let leagueID: string = this.division == "1" ? this.mainLeagueID : this.secondDivisionID;
+    this.getGames(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek + 38).toString()) + leagueID);
+
   }
 
-  getGames(fplUrl: string){
-    
-    
+  getGames(fplUrl: string) {
+
+
     // this.fplURL_fixtures = this.fplURL_fixtures.replace("{gameweek}", this.completed_gameweek.toString()) + leagueID;
     this.http.get(fplUrl).subscribe(
       response => {
         this.fixtures = response["results"]
-        
+
 
 
       },
@@ -75,7 +76,7 @@ export class AppComponent {
     );
 
   }
-  
+
 
 
   confirmStatus() {
@@ -85,7 +86,7 @@ export class AppComponent {
     let relegation_cuttoff = this.playerData[leagueSize - 4]["total"];
 
     let matches_remaining = ((leagueSize * 2) - 2) - this.playerData[0]["matches_played"];
-    for (let i = 0, j = leagueSize - 3; i < 3 && j < leagueSize; ++i, j++) {      
+    for (let i = 0, j = leagueSize - 3; i < 3 && j < leagueSize; ++i, j++) {
       if (this.division == '2') {
         if (promotion_cuttoff + (3 * matches_remaining) < this.playerData[i]["total"]) {
           this.playerData[i]["rank"] = "P"
@@ -101,5 +102,10 @@ export class AppComponent {
       }
     }
 
+  }
+
+  initialiseCup() {
+    this.cupFlag = true
+    this.division = '0'
   }
 }

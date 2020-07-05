@@ -1,95 +1,302 @@
 <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">liga líder después del cierre</a>
   <a class="navbar-brand" href="#">segundo liga tras el cierre</a> -->
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top pageHeader">
+
+
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top pageHeader">
     <!-- <a class="navbar-brand" href="#">FPL</a> -->
-    
-  
-    <span class=" navbar-collapse" id="navbarsExampleDefault" >
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item" [ngClass]="{'active': division === '1'}">
-          <a class="nav-link" (click)=callFPLService(mainLeagueID)>liga líder después del cierre</a>
-        </li>
-        <li class="nav-item" [ngClass]="{'active': division === '2'}">
-          <a class="nav-link" (click)=callFPLService(secondDivisionID)>segundo liga tras el cierre</a>
-        </li>
-       
-      </ul>
-      
+
+
+    <span class=" navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" [ngClass]="{'active': division === '1'}">
+                <a class="nav-link" (click)=callFPLService(mainLeagueID)>liga líder después del cierre</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active': division === '2'}">
+                <a class="nav-link" (click)=callFPLService(secondDivisionID)>segundo liga tras el cierre</a>
+            </li>
+            <li class="nav-item" [ngClass]="{'active': division === '0'}">
+                <a class="nav-link" (click)="initialiseCup()">Cup</a>
+            </li>
+        </ul>
+
     </span>
-  </nav>
-  
+</nav>
+
 <!-- </nav> -->
 <br>
-<main role="main" class="container pageBody" >
+<div *ngIf="!cupFlag">
+    <main role="main" class="container pageBody">
 
-  <div class="starter-template">
-    
-    
-
-    <table class="table  table-dark" style="width: fit-content;">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Team</th>
-          <!-- <th scope="col">Player</th> -->
-          
-          <th scope="col">Played</th>
-          <th scope="col">Won</th>
-          <th scope="col">Draw</th>
-          <th scope="col">Lost</th>
-          <th scope="col">Points</th>
-          <th scope="col">GD</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let player of playerData" [ngClass]="{'relegation':(player.rank>playerData.length-3), 'relegated': player.rank=='R', 'promotion':(player.rank<4) && player.division=='276380','champion': player.rank=='C'|| player.rank=='P'}">
-          <th scope="row">{{player.rank}}</th>
-          <td><b>{{player.entry_name}}</b><br>{{player.player_name}}</td>
-          <!-- <td></td> -->
-          <td>{{player.matches_played}}</td>
-          <td>{{player.matches_won}}</td>
-          <td>{{player.matches_drawn}}</td>
-          <td>{{player.matches_lost}}</td>
-          <td>{{player.total}}</td>
-          <td>{{player.points_for}}</td>
-        </tr>
-        
-      </tbody>
-    </table>
-  </div>
-
-</main>
-
-
-<div class="container">
-  <ul class="nav nav-tabs">
-
-    <li class="nav-item">
-      <a class="nav-link" [ngClass]="{'selected': result}" (click)="getResults()">Results</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [ngClass]="{'selected': !result}" (click)="getFixtures()">Fixtures</a>
-    </li>
-    
-    
-  </ul>
-  <br>
-
-  <table class="table  table-dark" style="width: 50%;">
-    <tbody>
-
-      <tr *ngFor="let fixture of fixtures">
-
-        <td style="width: 40%;"><b>{{fixture.entry_1_name}}</b> <br> {{fixture.entry_1_player_name}}</td>
-        
-        <td style="width: 20%;"> {{fixture.entry_1_points}} : {{fixture.entry_2_points}} </td>
-        
-        <td style="width: 40%;"><span style="text-align: end;"><b>{{fixture.entry_2_name}}</b> <br> {{fixture.entry_2_player_name}}</span></td>
+        <div class="starter-template">
 
 
 
-      </tr>
-    </tbody>
-</table>
+            <table class="table  table-dark" style="width: fit-content;">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Team</th>
+                        <!-- <th scope="col">Player</th> -->
+
+                        <th scope="col">Played</th>
+                        <th scope="col">Won</th>
+                        <th scope="col">Draw</th>
+                        <th scope="col">Lost</th>
+                        <th scope="col">Points</th>
+                        <th scope="col">GD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let player of playerData"
+                        [ngClass]="{'relegation':(player.rank>playerData.length-3), 'relegated': player.rank=='R', 'promotion':(player.rank<4) && player.division=='276380','champion': player.rank=='C'|| player.rank=='P'}">
+                        <th scope="row">{{player.rank}}</th>
+                        <td><b>{{player.entry_name}}</b><br>{{player.player_name}}</td>
+                        <!-- <td></td> -->
+                        <td>{{player.matches_played}}</td>
+                        <td>{{player.matches_won}}</td>
+                        <td>{{player.matches_drawn}}</td>
+                        <td>{{player.matches_lost}}</td>
+                        <td>{{player.total}}</td>
+                        <td>{{player.points_for}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+
+    <div class="container">
+        <ul class="nav nav-tabs">
+
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'selected': result}" (click)="getResults()">Results</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'selected': !result}" (click)="getFixtures()">Fixtures</a>
+            </li>
+
+
+        </ul>
+        <br>
+
+        <table class="table  table-dark" style="width: 50%;">
+            <tbody>
+
+                <tr *ngFor="let fixture of fixtures">
+
+                    <td style="width: 40%;"><b>{{fixture.entry_1_name}}</b> <br> {{fixture.entry_1_player_name}}</td>
+
+                    <td style="width: 20%;"> {{fixture.entry_1_points}} : {{fixture.entry_2_points}} </td>
+
+                    <td style="width: 40%;"><span style="text-align: end;"><b>{{fixture.entry_2_name}}</b> <br>
+                            {{fixture.entry_2_player_name}}</span></td>
+
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<br>
+<div *ngIf="cupFlag">
+    
+    <main role="main" class="container pageBody">
+        <div class="rounds card" *ngIf="completed_gameweek>7">
+            <div class="round-details card-header">Final<br /></div>
+
+
+            <table class="table card-body">
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><b>R5 T1</b><br>R5 P1</td>
+                        <td>VS</td>
+                        <td><b>R5 T2</b><br>R5 P2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="rounds card" *ngIf="completed_gameweek>6">
+
+            <div class="round-details card-header">Semi Final<br /></div>
+
+
+            <table class="table">
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><b>R4 T1</b><br>R4 P1</td>
+                        <td>VS</td>
+                        <td><b>R4 T2</b><br>R4 P2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><b>R4 T3</b><br>R4 P3</td>
+                        <td>VS</td>
+                        <td><b>R4 T4</b><br>R4 P4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="rounds card" *ngIf="completed_gameweek>5">
+
+
+
+            <div class="round-details card-header">Round 3<br /></div>
+
+
+            <table class="table">
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><b>R3 T1</b><br>R3 P1</td>
+                        <td>VS</td>
+                        <td><b>R3 T2</b><br>R3 P2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><b>R3 T3</b><br>R3 P3</td>
+                        <td>VS</td>
+                        <td><b>R3 T4</b><br>R3 P4</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td><b>R3 T5</b><br>R3 P5</td>
+                        <td>VS</td>
+                        <td><b>R3 T6</b><br>R3 P6</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td><b>R3 T7</b><br>R3 P7</td>
+                        <td>VS</td>
+                        <td><b>R3 T8</b><br>R3 P8</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="rounds card" *ngIf="completed_gameweek>4">
+
+
+            <div class="round-details card-header">Round 2<br /></div>
+
+
+            <table class="table">
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><b>R2 T1</b><br>R2 P1</td>
+                        <td>VS</td>
+                        <td><b>R2 T2</b><br>R2 P2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><b>R2 T3</b><br>R2 P3</td>
+                        <td>VS</td>
+                        <td><b>R2 T4</b><br>R2 P4</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td><b>R2 T5</b><br>R2 P5</td>
+                        <td>VS</td>
+                        <td><b>R2 T6</b><br>R2 P6</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">4</th>
+                        <td><b>R2 T7</b><br>R2 P7</td>
+                        <td>VS</td>
+                        <td><b>R2 T8</b><br>R2 P8</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">5</th>
+                        <td><b>R2 T9</b><br>R2 P9</td>
+                        <td>VS</td>
+                        <td><b>R2 T10</b><br>R2 P10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td><b>R2 T11</b><br>R2 P11</td>
+                        <td>VS</td>
+                        <td><b>R2 T12</b><br>R2 P12</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td><b>R2 T13</b><br>R2 P13</td>
+                        <td>VS</td>
+                        <td><b>R2 T14</b><br>R2 P14</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td><b>R2 T15</b><br>R2 P15</td>
+                        <td>VS</td>
+                        <td><b>R2 T16</b><br>R2 P16</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="rounds card" *ngIf="completed_gameweek>2">
+
+
+            <div class="round-details card-header">Round 1<br /></div>
+
+
+            <table class="table">
+
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><b>R1 T1</b><br>R1 P1</td>
+                        <td>VS</td>
+                        <td><b>R1 T2</b><br>R1 P2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><b>R1 T1</b><br>R1 P1</td>
+                        <td>VS</td>
+                        <td><b>R1 T2</b><br>R1 P2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td><b>R1 T1</b><br>R1 P1</td>
+                        <td>VS</td>
+                        <td><b>R1 T2</b><br>R1 P2</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">4</th>
+                        <td><b>R1 T1</b><br>R1 P1</td>
+                        <td>VS</td>
+                        <td><b>R1 T2</b><br>R1 P2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+</div>
+
+<!-- 
+<td>
+    <span style="text-align: left;">0</span>
+    <span style="text-align: center;">:</span>
+    <span style="text-align: right;">0</span>
+</td> 
+-->
