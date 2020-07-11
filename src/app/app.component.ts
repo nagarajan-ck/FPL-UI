@@ -19,6 +19,11 @@ export class AppComponent {
   result: boolean = true
   completed_gameweek: number;
   cupFlag: boolean = false
+  cupMap: Map<any, any> = new Map();
+  RoundTeams = ["Ramu Kaká", "SARBATH FC", "Paper Tigers", "Hotspurs FC Higu Utd", "Homegrown FC", "Trichur's Finest",
+    "Addicos FC", "DustyBun Demogorgons", "ROOK FC", "Cannon Fodder", "Red dev", "FC Death Riders", "Travancore Royals"
+    , "Rymans FC", "kunthirikkam fc", "The One Manchester"]
+  RoundScore = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -77,6 +82,38 @@ export class AppComponent {
 
   }
 
+  cupScores() {
+    this.mapScores(this.mainLeagueID);
+    this.mapScores(this.secondDivisionID);
+  }
+
+
+
+  
+  mapScores(leagueID: string) {
+    this.http.get(this.fplURL_fixtures.replace("{gameweek}", (this.completed_gameweek + 39).toString()) + leagueID).subscribe(
+      resp => {
+        for (let index = 0; index < resp["results"].length; index++) {
+          let element = resp["results"][index];
+          this.cupMap.set(element["entry_1_name"], element["entry_1_points"])
+          this.cupMap.set(element["entry_2_name"], element["entry_2_points"])
+        }
+        for (let index = 0; index < this.RoundTeams.length; index++) {
+          this.RoundScore[index] = this.cupMap.get(this.RoundTeams[index]);
+        }
+      }
+
+      , err => {
+        console.log(err);
+      }
+
+    );
+
+
+
+
+  }
+
 
 
   confirmStatus() {
@@ -107,5 +144,6 @@ export class AppComponent {
   initialiseCup() {
     this.cupFlag = true
     this.division = '0'
+    this.cupScores()
   }
 }
