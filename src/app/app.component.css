@@ -10322,6 +10322,9 @@
     padding: 3px;
     padding-left: 10px;
   }
+  .nav-item{
+    width: fit-content;
+  }
   
   }
 
