@@ -10335,4 +10335,6 @@
   margin-bottom:20px;
 }
 
-  
+  .eliminated{
+    opacity: 0.5;
+  }
