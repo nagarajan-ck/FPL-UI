@@ -20,10 +20,9 @@ export class AppComponent {
   completed_gameweek: number;
   cupFlag: boolean = false
   cupMap: Map<any, any> = new Map();
-  RoundTeams = ["Ramu Kaká", "SARBATH FC", "Paper Tigers", "Hotspurs FC Higu Utd", "Homegrown FC", "Trichur's Finest",
-    "Addicos FC", "DustyBun Demogorgons", "ROOK FC", "Cannon Fodder", "Red dev", "FC Death Riders", "Travancore Royals"
-    , "Rymans FC", "kunthirikkam fc", "The One Manchester"]
-  RoundScore = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  RoundTeams = ["SARBATH FC",  "Hotspurs FC Higu Utd","Cannon Fodder", "Red dev", "Homegrown FC", "kunthirikkam fc", 
+    "Addicos FC", "Rymans FC"]
+  RoundScore = [0, 0, 0, 0, 0, 0, 0, 0];
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
